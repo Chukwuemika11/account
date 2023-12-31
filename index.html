@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your E-Commerce - Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        nav {
+            background-color: #eee;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        section {
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #loggedInMessage {
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Your E-Commerce</h1>
+        <div id="loggedInMessage">Welcome, <span id="loggedInUsername"></span>! You are logged in.</div>
+    </header>
+
+    <nav>
+        <a href="#" onclick="showSignupForm()">Sign Up</a> | <a href="#" onclick="showLoginForm()">Login</a>
+    </nav>
+
+    <section id="accountSection">
+        <!-- Initial content will be dynamically replaced with signup/login forms -->
+    </section>
+
+    <script>
+        // Check if the user is already logged in
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+        // Show login form by default if the user is not logged in
+        if (!isLoggedIn) {
+            showSignupForm();
+        } else {
+            showLoggedInMessage();
+        }
+
+        function showSignupForm() {
+            document.getElementById("accountSection").innerHTML = `
+                <form id="signupForm" onsubmit="return handleSignup()">
+                    <h3>Create an Account</h3>
+                    <label for="signupUsername">Username:</label>
+                    <input type="text" id="signupUsername" name="signupUsername" required>
+
+                    <label for="signupEmail">Email:</label>
+                    <input type="email" id="signupEmail" name="signupEmail" required>
+
+                    <label for="signupPassword">Password:</label>
+                    <input type="password" id="signupPassword" name="signupPassword" required>
+
+                    <button type="submit">Sign Up</button>
+                </form>
+            `;
+        }
+
+        function showLoginForm() {
+            document.getElementById("accountSection").innerHTML = `
+                <form id="loginForm" onsubmit="return handleLogin()">
+                    <h3>Login</h3>
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" name="loginEmail" required>
+
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required>
+
+                    <button type="submit">Login</button>
+                </form>
+            `;
+        }
+
+        function handleSignup() {
+            const username = document.getElementById("signupUsername").value;
+            const email = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPassword").value;
+
+            // Perform signup logic (mocked with an alert)
+            alert(`Signup successful!\nUsername: ${username}\nEmail: ${email}\nPassword: ${password}`);
+
+            // Set login status to true
+            localStorage.setItem('isLoggedIn', 'true');
+
+            // Show logged in message
+            showLoggedInMessage();
+
+            return false; // Prevent form submission
+        }
+
+        function handleLogin() {
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            // Perform login logic (mocked with an alert)
+            alert(`Login successful!\nEmail: ${email}\nPassword: ${password}`);
+
+            // Set login status to true
+            localStorage.setItem('isLoggedIn', 'true');
+
+            // Show logged in message
+            showLoggedInMessage();
+
+            return false; // Prevent form submission
+        }
+
+        function showLoggedInMessage() {
+            const loggedInUsername = localStorage.getItem('loggedInUsername');
+            document.getElementById("accountSection").innerHTML = '';
+            document.getElementById("loggedInMessage").style.display = 'block';
+            document.getElementById("loggedInUsername").textContent = loggedInUsername;
+        }
+    </script>
+
+</body>
+</html>
